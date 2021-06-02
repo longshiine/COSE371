@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DATABASE Q&A 게시판</title>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        body>.grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 1000px;
+        }
+        .view_btn {
+            cursor: pointer;
+        }
+        .card {
+            margin: 30px;
+            margin-top: 60px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div style="margin: 30px;">
+        <span>
+            <a href="/home"><button class="ui gray submit button">home</button></a>
+        </span>
+        <span>
+            <a href="/mypage"><button class="ui teal submit button">my page</button></a>
+        </span>
+        <span>
+            <a href="/logout"><button class="ui gray submit button">logout</button></a>
+        </span>
+    </div>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+          <div class="ui card" style="margin-top: 40px;">
+            <div class="image">
+              {% if user[0][2] == 1 %}       
+                <img src="{{url_for('static', filename='img/elyse.png')}}">
+              {% endif %}
+              {% if user[0][2] == 2 %}         
+                <img src="{{url_for('static', filename='img/jenny.jpeg')}}">
+              {% endif %}
+              {% if user[0][2] == 3 %}        
+                <img src="{{url_for('static', filename='img/steve.jpeg')}}">
+              {% endif %}
+            </div>
+            <div class="content">
+              <a class="header">아이디: {{user[0][0]}}</a>
+              <div class="meta">
+                <span class="date">직업: {{user[0][3]}}</span>
+              </div>
+              <div class="description">
+              </div>
+            </div>
+            <div class="extra content">
+              <a>
+                게시물: <span class="ui label circular mini blue">{{posts_count}}</span>
+              </a>
+              <br>
+              <a>
+                댓글: <span class="ui label circular mini teal">{{comments_count}}</span>
+              </a>
+            </div>
+          </div>
+          <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>제목</th>
+                    <th>등록일</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+                {% for post in posts %}
+                  <tr>
+                    <td>{{post[1]}}</td>
+                    <td><a href="{{ url_for('post', post_id = post[1])}}">{{post[2]}}</a></td>
+                    <td>
+                      {{post[4]}}
+                      <span class="ui right floated button mini red">
+                        <a style="color: white; text-decoration: none;" href="{{ url_for('deletePost', post_id = post[1])}}">Delete</a>
+                      </span>
+                      <span class="ui right floated button mini teal">
+                        <a style="color: white; text-decoration: none;" href="{{ url_for('editPost', post_id = post[1])}}">Edit</a>
+                      </span>
+                  </td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</body>
+</html>

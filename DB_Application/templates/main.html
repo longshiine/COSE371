@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DATABASE Q&A 게시판</title>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        body>.grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 1000px;
+        }
+        .view_btn {
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div style="margin: 30px;">
+        <span>
+            <a href="/home"><button class="ui teal submit button">home</button></a>
+        </span>
+        <span>
+            <a href="/mypage"><button class="ui gray submit button">my page</button></a>
+        </span>
+        <span>
+            <a href="/logout"><button class="ui gray submit button">logout</button></a>
+        </span>
+    </div>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui blue image header">
+                게시판 페이지
+            </h2>
+            <div class="ui large form">
+                <div class="ui stacked segment">
+                    <a href="/write"><button class="ui fluid large blue submit button">게시글 작성하기</button></a>
+                    <table class="ui celled table">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>이름</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list">
+                          {%  for post in posts %}
+                            <tr>
+                              {% if post[5] == 3 %}
+                                <td><span class="ui left floated label mini yellow">공지사항</span></td>
+                              {% endif %}
+                              {% if post[5] == 2 %}
+                                <td><span class="ui left floated label mini teal">조교공지</span></td>
+                              {% endif %}
+                              {% if post[5] == 1 %}
+                                <td><span class="ui left floated label mini gray">{{post[0]}}</span></td>
+                              {% endif %}
+                              <td><a href="{{ url_for('post', post_id = post[0])}}">{{post[1]}}</a></td>
+                              <td>
+                                <span class="ui left floated label mini gray">{{post[2]}}</span>
+                                </td>
+                              <td>
+                                  <span class="ui left floated label mini gray" style="margin-top:5px;">
+                                  {{post[3].strftime("%Y/%m/%d")}}
+                                  </span>
+                                  <span class="ui right floated button mini teal">
+                                    <a style="color: white; text-decoration: none;">댓글 <span style="margin-left:10px;">{{post[4]}}</span></a>
+                                  </span>
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ui error message"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DATABASE Q&A 게시판</title>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        body>.grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 1000px;
+        }
+        .view_btn {
+            cursor: pointer;
+        }
+        .card {
+            margin: 30px;
+            margin-top: 60px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div style="margin: 30px;">
+        <span>
+            <a href="/home"><button class="ui gray submit button">home</button></a>
+        </span>
+        <span>
+            <a href="/mypage"><button class="ui gray submit button">my page</button></a>
+        </span>
+        <span>
+            <a href="/logout"><button class="ui gray submit button">logout</button></a>
+        </span>
+    </div>
+    <div class="card">
+        <div class="column">
+            <h2 class="ui blue image header">
+                {{post[0][0]}}
+            </h2>
+            <div class="ui card aligned left fluid">
+                <div class="content">
+                    <div class="header">제목: {{post[0][2]}}</div>
+                </div>
+                <div class="content">
+                    <a class="header">작성자: {{post[0][4]}}</a>
+                    <div class="meta">
+                      <span class="date">날짜: {{post[0][5].strftime("%Y/%m/%d")}}</span>
+                    </div>
+                    <p class="description">
+                      {% for line in post[0][3].split("\n")%}
+                        {{line}}<br>
+                      {% endfor %}
+                    </p>
+                </div>
+                <div class="extra content">
+                    <div style="margin-bottom: 10px;">
+                        <a class="ui label teal">
+                            Comments
+                        </a>
+                        <a class="ui label gray">
+                            {{count}}
+                          </a>
+                    </div>
+                    {% for comment in comments %}
+                        <div class="ui comments">
+                            <div class="comment">
+                            {% if comment[4] == 1 %}
+                                <a class="avatar">
+                                    <img src="{{url_for('static', filename='img/elyse.png')}}">
+                                </a>
+                            {% endif %}
+                            {% if comment[4] == 2 %}
+                                <a class="avatar">
+                                    <img src="{{url_for('static', filename='img/jenny.jpeg')}}">
+                                </a>
+                            {% endif %}
+                            {% if comment[4] == 3 %}
+                                <a class="avatar">
+                                    <img src="{{url_for('static', filename='img/steve.jpeg')}}">
+                                </a>
+                            {% endif %}
+                            <div class="content">
+                                <a>{{comment[1]}}</a>
+                                <div class="metadata">
+                                <div class="date">{{comment[2]}}</div>
+                                </div>
+                                <div class="text">
+                                    {{comment[3].split(":")[0]}}
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <form class="ui large form" action="{{ url_for('post', post_id = post[0][6])}}" method="POST">
+                        <div class="field">
+                            <div class="ui input">
+                                <input id="content" type="text" name="content" placeholder="댓글 작성">
+                            </div>
+                            <input class="ui blue submit button" style="margin-top: 10px;" type="submit" name="btn" value="작성"></input>
+                        </div>
+                    </form>  
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

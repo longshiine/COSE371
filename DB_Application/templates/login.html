@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DATABASE Q&A 게시판</title>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        body>.grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 450px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui blue image header">
+ 				      DATABASE Q&A 게시판
+            </h2>
+            <form class="ui large form" action="/" method="POST">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input id="user_id" type="text" name="id" placeholder="아이디">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input id ="password" type="password" name="pw" placeholder="비밀번호">
+                        </div>
+                    </div>
+                    <input class="ui fluid large blue submit button" type="submit" name="btn" value="Login"></input>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+            <div class="ui message">
+                로그인 할 계정이 없다면 <a href="/register">여기</a>를 눌러 회원가입을 해주세요.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

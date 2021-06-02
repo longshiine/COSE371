@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DATABASE Q&A 게시판</title>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+        body>.grid {
+            height: 100%;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 1000px;
+        }
+        .view_btn {
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div style="margin: 30px;">
+        <span>
+            <a href="/home"><button class="ui teal submit button">home</button></a>
+        </span>
+        <span>
+            <a href="/mypage"><button class="ui gray submit button">my page</button></a>
+        </span>
+        <span>
+            <a href="/logout"><button class="ui gray submit button">logout</button></a>
+        </span>
+    </div>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui blue image header">
+                글 수정 페이지
+            </h2>
+            <div class="ui large form">
+              <div class="ui stacked segment">
+                <form class="ui large form" action="{{ url_for('editPost', post_id = post[0][0])}}" method="POST">
+                  <div class="ui stacked segment">
+                      <div class="field">
+                          <div class="input">
+                              <input id="title" type="text" name="title" placeholder="질문 제목 (200자 이내)" autofocus autocomplete="off" value={{post[0][1]}}>
+                          </div>
+                      </div>
+                      <div class="field">
+                        <div class="input">
+                            <textarea id="content" type="text" name="content" placeholder="내용">{{post[0][2]}}</textarea>
+                        </div>
+                      </div>
+                      <input class="ui fluid large teal submit button" type="submit" name="btn" value="수정"></input>
+                  </div>
+                  <div class="ui error message"></div>
+                </form>
+              </div>
+              <div class="ui error message"></div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>
